@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+<setup name="tree way handshake" width="800" height="600" bcolor="ff000000">
+<knot id="a" pos="-200,0,0" radius="70" type="1" color="ffEEAD0E" ltext="client" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="b" pos="200,0,0" radius="70" type="1" color="ff528B8B" ltext="server" lfsize="30" lcolor="ffffffff"></knot>
+<path id="p1" from="a" to="b" width="5" color="ffaabbcc" ltext="Network"></path>
+<txt_layer id="txt0" on_on_start_of="m1"  off_on_end_of="m1" pos="-100,300,100" width="300" height="50" orientation="0" color="dd000000" tfsize="20" text="client sends syn request" tcolor="ffffffff" ltext="" ddc="1" tddc="1" lddc="1" lpos="-1" lcolor="6600a000" lfsize="23"  typewriter="1"  typewriter_interval="100" typewriter_restartendless="0" lrot="1"></txt_layer>
+<txt_layer id="txt1" on_on_start_of="m2"  off_on_end_of="m2" pos="-100,300,100" width="300" height="50" orientation="0" color="dd000000" tfsize="20" text="server responds with ack" tcolor="ffffffff" ltext="" ddc="1" tddc="1" lddc="1" lpos="-1" lcolor="6600a000" lfsize="23"  typewriter="1"  typewriter_interval="100" typewriter_restartendless="0" lrot="1"></txt_layer>
+<txt_layer id="txt2" on_on_start_of="m3"  off_on_end_of="m3" pos="-100,300,100" width="300" height="50" orientation="0" color="dd000000" tfsize="20" text="client responds with syn-ack" tcolor="ffffffff" ltext="" ddc="1" tddc="1" lddc="1" lpos="-1" lcolor="6600a000" lfsize="23"  typewriter="1"  typewriter_interval="100" typewriter_restartendless="0" lrot="1"></txt_layer>
+</setup>
+<animation>
+<msg id="m1" from="a" to="b" tstart="0" tend="4000" type="0" radius="23" color="ffff4223" ltext="syn" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m2" on_on_end_of="m1" from="b" to="a" tstart="500" tend="4000" radius="23" type="0" color="ff00ff00"  ltext="ack" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m3" on_on_end_of="m2" from="a" to="b" tstart="500" tend="4000" radius="23" type="0" color="ff0000ff"  ltext="syn-ack" lfsize="25" lcolor="ffffffff"></msg>
+</animation>
+</scene>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+<setup name="switch" width="800" height="600" bcolor="ff000000">
+<knot id="c1" pos="-300,-200,0" radius="70" type="1" color="ffEEAD0E" ltext="client 1\n00:00:00:00:00:01" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c2" pos="-300,0,0" radius="70" type="1" color="ffEEAD0E" ltext="client 2\n00:00:00:00:00:02" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c3" pos="-300,200,0" radius="70" type="1" color="ffEEAD0E" ltext="client 3\n00:00:00:00:00:03" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c4" pos="300,-200,0" radius="70" type="1" color="ffEEAD0E" ltext="client 4\n00:00:00:00:00:04" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c5" pos="300,0,0" radius="70" type="1" color="ffEEAD0E" ltext="client 5\n00:00:00:00:00:05" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c6" pos="300,200,0" radius="70" type="1" color="ffEEAD0E" ltext="client 6\n00:00:00:00:00:06" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="s1" pos="0,0,0" dim="150,30,80" type="2" color="ff528B8B" ltext="switch\n  \n  " lfsize="30" lcolor="ffffffff"></knot>
+<path id="p1" from="c1" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 0\n \n"></path>
+<path id="p2" from="c2" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 1"></path>
+<path id="p3" from="c3" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 2\n \n"></path>
+<path id="p4" from="c4" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 3\n \n"></path>
+<path id="p5" from="c5" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 4"></path>
+<path id="p6" from="c6" to="s1" width="5" color="ffaabbcc" ltext="switch\nport 5\n \n"></path>
+<txt_layer id="txt0" on_on_start_of="m2"  off_on_end_of="m2" pos="-100,300,100" width="300" height="250" orientation="0" color="dd000000" tfsize="20" text="target mac unknown\nswitch broadcast" tcolor="ffffffff"></txt_layer>
+<txt_layer id="txt1" on_on_end_of="m1" off_on_start_of="txt2" pos="-150,-400,100" width="300" height="150" orientation="0" color="dd000000" tfsize="20" text="port 0 - 00:00:00:00:00:01" tcolor="ffffffff"></txt_layer>
+<txt_layer id="txt2" on_on_end_of="m7" off_on_start_of="txt3"  pos="-150,-400,100" width="300" height="150" orientation="0" color="dd000000" tfsize="20" text="port 0 - 00:00:00:00:00:01\nport 4 - 00:00:00:00:00:05" tcolor="ffffffff"></txt_layer>
+<txt_layer id="txt3" on_on_end_of="m9" pos="-150,-400,100" width="300" height="150" orientation="0" color="dd000000" tfsize="20" text="port 0 - 00:00:00:00:00:01\nport 4 - 00:00:00:00:00:05\nport 2 - 00:00:00:00:00:03" tcolor="ffffffff"></txt_layer>
+</setup>
+<animation>
+<msg id="m1" from="c1" to="s1" tstart="0" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m2" from="s1" to="c2" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5\nbroadcast" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m3" from="s1" to="c3" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5\nbroadcast" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m4" from="s1" to="c4" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5\nbroadcast" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m5" from="s1" to="c5" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5\nbroadcast" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m6" from="s1" to="c6" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c1->c5\nbroadcast" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m7" from="c5" to="s1" on_on_end_of="m6" tstart="500" tend="4000" type="0" radius="23" color="ffff4223" ltext="response\nc5->c1" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m8" from="s1" to="c1" on_on_end_of="m7" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="response\nc5->c1" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m9" from="c3" to="s1" on_on_end_of="m8" tstart="500" tend="4000" type="0" radius="23" color="ffff4223" ltext="request\nc3->c5" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m10" from="s1" to="c5" on_on_end_of="m9" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="request\nc3->c5" lfsize="25" lcolor="ffffffff"></msg>
+</animation>
+</scene>

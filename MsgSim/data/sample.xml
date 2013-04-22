@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+<setup name="firewall 2 cores" width="1200" height="1000" bcolor="ff000000" dpdt="0" auto_center="1">
+
+<!--PPU 0-->
+<knot id="DETECT0" pos="0,0,0" radius="40" type="1" color="ff115465" ltext="DETEC" lsize="13" lcolor="ffffffff"></knot>
+<knot id="REWRITE0" pos="50,0,0" radius="40" type="1" color="ff115465" ltext="REWRITE" lsize="13" lcolor="ffffffff"></knot>
+<knot id="DROP0" pos="100,0,0" radius="40" type="1" color="ff115465" ltext="DROP" lsize="13" lcolor="ffffffff"></knot>
+<knot id="DELAY0" pos="150,0,0" radius="40" type="1" color="ff115465" ltext="DELAY" lsize="13" lcolor="ffffffff"></knot>
+<knot id="PPU0PC" ddc="0" pos="80,0,0" dim="240,100,80" type="2" color="20115465" lpos="-1" ltext="PPU 0 processing chain" lfsize="18" lcolor="ffffffff"></knot>
+
+<!--PPU 1-->
+<knot id="DETECT1" pos="0,230,0" radius="40" type="1" color="ff115465" ltext="DETEC" lsize="13" lcolor="ffffffff"></knot>
+<knot id="REWRITE1" pos="50,230,0" radius="40" type="1" color="ff115465" ltext="REWRITE" lsize="13" lcolor="ffffffff"></knot>
+<knot id="DROP1" pos="100,230,0" radius="40" type="1" color="ff115465" ltext="DROP" lsize="13" lcolor="ffffffff"></knot>
+<knot id="DELAY1" pos="150,230,0" radius="40" type="1" color="ff115465" ltext="DELAY" lsize="13" lcolor="ffffffff"></knot>
+<knot id="PPU1PC" ddc="0" pos="80,230,0" dim="240,100,80" type="2" color="20115465" lpos="-1" ltext="PPU 1 processing chain" lfsize="18" lcolor="ffffffff"></knot>
+
+<!--DROP, DELAY-->
+<knot id="DROPBUF" pos="100,110,0" radius="40" type="1" color="407B8F94" ltext="/dev/null" lsize="13" lcolor="ffffffff"></knot>
+<knot id="STORE" pos="150,110,0" radius="40" type="1" color="407B8F94" ltext="store" lsize="13" lcolor="ffffffff"></knot>
+
+<!--left LPUs-->
+<knot id="L_LPU_0_OUT" pos="-100,-40,0" radius="40" type="1" color="ff3365DC" ltext="LPU 0 OUT" lsize="13" lcolor="ffffffff"></knot>
+<knot id="L_LPU_0_IN" pos="-100,40,0" radius="40" type="1" color="ff3365DC" ltext="LPU 0 IN" lsize="13" lcolor="ffffffff"></knot>
+<knot id="L_LPU_1_IN" pos="-100,190,0" radius="40" type="1" color="ff3365DC" ltext="LPU 1 IN" lsize="13" lcolor="ffffffff" rxce="1"></knot>
+<knot id="L_LPU_1_OUT" pos="-100,270,0" radius="40" type="1" color="ff3365DC" ltext="LPU 1 OUT" lsize="13" lcolor="ffffffff"></knot>
+
+
+<!--right LPUs-->
+<knot id="R_LPU_0_OUT" pos="260,-40,0" radius="40" type="1" color="ff3365DC" ltext="LPU 0 OUT" lsize="13" lcolor="ffffffff"></knot>
+<knot id="R_LPU_0_IN" pos="260,40,0" radius="40" type="1" color="ff3365DC" ltext="LPU 0 IN" lsize="13" lcolor="ffffffff"></knot>
+<knot id="R_LPU_1_IN" pos="260,190,0" radius="40" type="1" color="ff3365DC" ltext="LPU 1 IN" lsize="13" lcolor="ffffffff"></knot>
+<knot id="R_LPU_1_OUT" pos="260,270,0" radius="40" type="1" color="ff3365DC" ltext="LPU 1 OUT" lsize="13" lcolor="ffffffff" txce="1"></knot>
+
+<!--loadbalancer-->
+<knot id="R_LB" pos="340,110,0" dim="40,80,40" type="2" color="9033DCD4" ltext="loadbalancer" lsize="13" lcolor="ffffffff" txce="1" rxce="1" cunit="msg"></knot>
+<knot id="L_LB" pos="-180,110,0" dim="40,80,40" type="2" color="9033DCD4" ltext="loadbalancer" lsize="13" lcolor="ffffffff" txce="1" rxce="1" cunit="msg"></knot>
+
+<!--prx-->
+<knot id="firewall" ddc="0" pos="80,110,0" dim="600,400,100" type="2" color="20a0A000" ltext="firewall" lfsize="24" lcolor="ffffffff"></knot>
+
+<!--net-->
+<knot id="internet" ddc="1" pos="500,110,0" radius="75" type="0" color="9004B9DC" ltext="INTERNET" lfsize="24" lcolor="ffffffff"></knot>
+
+<!--hosts-->
+<knot id="host0" ddc="1" pos="-300,-30,45" radius="45" type="1" color="9034B9DC" ltext="host 0" lfsize="15" lcolor="ffffffff" txce="1"></knot>
+<knot id="host1" ddc="1" pos="-300,60,-45" radius="45" type="1" color="9034B9DC" ltext="host 1" lfsize="15" lcolor="ffffffff"></knot>
+<knot id="host2" ddc="1" pos="-300,150,45" radius="45" type="1" color="9034B9DC" ltext="host 2" lfsize="15" lcolor="ffffffff"></knot>
+<knot id="host3" ddc="1" pos="-300,240,-45" radius="45" type="1" color="9034B9DC" ltext="host 3" lfsize="15" lcolor="ffffffff"></knot>
+
+<!--txt layer-->
+<txt_layer id="txt0" tstart="0" tend="12000" pos="-100,300,100" width="300" height="250" orientation="0" color="dd00a000" tfsize="20" text="Lorem ipsum!\n\nDolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum." tcolor="ffffffff" ltext="" ddc="1" tddc="1" lddc="1" lpos="-1" lcolor="6600a000" lfsize="23"  typewriter="1"  typewriter_interval="100" typewriter_restartendless="0" lrot="1"></txt_layer>
+<txt_layer id="txt1" on_on_end_of="txt0" tstart="500" tend="14000" pos="-300,300,100" width="300" height="250" orientation="0" color="dd00a000" tfsize="20" text="At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." tcolor="ffffffff" ltext="" ddc="1" tddc="1" lddc="1" lpos="-1" lcolor="6600a000" lfsize="23"  typewriter="1"  typewriter_interval="100" typewriter_restartendless="0" lrot="1"></txt_layer>
+
+<!--img layer-->
+<img_layer id="img0" on_on_end_of="txt0" tstart="500" off_on_end_of="txt1" src="sample.png" alpha="255" t_fade_in="2000" t_fade_out="3000" orientation="0" pos="100,300,100" ></img_layer>
+
+<!--paths-->
+<path id="p1" from="DELAY0" to="STORE" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p2" from="DELAY1" to="STORE" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p3" from="DROP0" to="DROPBUF" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p4" from="DROP1" to="DROPBUF" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p5" from="L_LPU_0_OUT" to="DETECT0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p6" from="L_LPU_0_IN" to="DETECT0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p7" from="L_LPU_1_OUT" to="DETECT1" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p8" from="L_LPU_1_IN" to="DETECT1" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p9" from="L_LB" to="L_LPU_0_IN" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p10" from="L_LB" to="L_LPU_1_IN" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p11" from="R_LB" to="R_LPU_0_IN" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p12" from="R_LB" to="R_LPU_1_IN" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p13" from="R_LPU_0_OUT" to="DELAY0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p14" from="R_LPU_0_IN" to="DELAY0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p15" from="R_LPU_1_OUT" to="DELAY1" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p16" from="R_LPU_1_IN" to="DELAY1" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p17" from="DETECT0" to="REWRITE0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p18" from="REWRITE0" to="DROP0" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p19" from="DROP0" to="DELAY0" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p20" from="DETECT1" to="REWRITE1" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p21" from="REWRITE1" to="DROP1" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p22" from="DROP1" to="DELAY1" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p23" from="R_LPU_0_OUT" to="internet" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p24" from="R_LB" to="internet" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p25" from="R_LPU_1_OUT" to="internet" width="2" color="ffaabbcc" ddc="1" ></path>
+
+<path id="p26" from="host0" to="L_LPU_0_OUT" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p27" from="host0" to="L_LB" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p28" from="host1" to="L_LPU_0_OUT" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p29" from="host1" to="L_LB" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p30" from="host2" to="L_LPU_1_OUT" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p31" from="host2" to="L_LB" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p32" from="host3" to="L_LPU_1_OUT" width="2" color="ffaabbcc" ddc="1" ></path>
+<path id="p33" from="host3" to="L_LB" width="2" color="ffaabbcc" ddc="1" ></path>
+
+</setup>
+<animation>
+<msg id="m1" from="host0" to="l_lb" tstart="1500" tend="4000" radius="20" type="1" color="ff115465"></msg>
+<msg id="m2" on_on_end_of="m1" from="l_lb" to="L_LPU_1_IN" tstart="500" tend="2000" radius="20" type="1" color="ff115465"></msg>
+<msg id="m3" on_on_end_of="m2" from="L_LPU_1_IN" to="DETECT1" tstart="500" tend="2000" radius="20" type="1" color="ff115465"></msg>
+<msg id="m4" on_on_end_of="m3" from="DELAY1" to="R_LPU_1_OUT" tstart="1000" tend="2000" radius="20" type="1" color="ff115465"></msg>
+<msg id="m5" on_on_end_of="m4" from="R_LPU_1_OUT" to="internet" tstart="500" tend="3000" radius="20" type="1" color="ff115465"></msg>
+
+</animation>
+</scene>

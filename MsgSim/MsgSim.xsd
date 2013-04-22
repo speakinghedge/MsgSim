@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/MsgSim" xmlns:tns="http://www.example.org/MsgSim" elementFormDefault="qualified">
+
+
+
+
+    <element name="scene" type="tns:tScene"></element>
+    
+    <complexType name="tScene">
+    	<sequence>
+    		<element name="setup" type="tns:tSetup" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="animation" type="tns:tAnimation" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="name" type="string">
+    		<annotation>
+    			<documentation>shown on top of the scene</documentation>
+    		</annotation></attribute>
+    	<attribute name="width" type="int">
+    		<annotation>
+    			<documentation>of the scene</documentation>
+    		</annotation></attribute>
+    	<attribute name="height" type="int">
+    		<annotation>
+    			<documentation>of the scene</documentation>
+    		</annotation></attribute>
+    	<attribute name="bcolor" type="tns:tcolor_string_argb"></attribute>
+    	<attribute name="auto_center" type="tns:tnumeric_switch">
+            <annotation>
+            	<documentation>auto center the scene based on knots 
+defined within the scene</documentation>
+            </annotation>
+    	</attribute>
+    </complexType>
+
+    <complexType name="tSetup">
+    	<sequence>
+    		<element name="knot" type="tns:tKnot" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="path" type="tns:tPath" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="txt_layer" type="tns:tTextLayer" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="img_layer" type="tns:tImageLayer" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="tAnimation">
+        <annotation>
+        	<documentation>contains animations in form of messages and camera movements</documentation>
+        </annotation>
+        <sequence>
+    		<element name="msg" type="tns:tMessage" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="tnumeric_switch">
+    	<annotation>
+    		<documentation>0 - off 1 - on</documentation>
+    	</annotation>
+    	<restriction base="integer">
+    		<minInclusive value="0"></minInclusive>
+    		<maxInclusive value="1"></maxInclusive>
+    		<enumeration value="0">
+    			<annotation>
+    				<documentation>off</documentation>
+    			</annotation></enumeration>
+    		<enumeration value="1">
+    			<annotation>
+    				<documentation>on</documentation>
+    			</annotation></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="tcolor_string_argb">
+        <annotation>
+        	<documentation>color string in the format AARRGGBB where
+AA: hex alpha 00..ff
+RR: hex red 00..ff
+GG: hex green 00..ff
+BB: hex blue 00..ff</documentation>
+        </annotation>
+        <restriction base="hexBinary">
+    		<length value="4"></length>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="tSceneElement">
+    	<attribute name="id" type="ID" use="optional">
+    		<annotation>
+    			<documentation>
+    				if not given - auto generated
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="ddc" type="tns:tnumeric_switch" default="1">
+    		<annotation>
+    			<documentation>
+    				do deep check - perform deep check when drawn
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="tstart" type="int" default="0">
+    		<annotation>
+    			<documentation>
+    				time the element is activated within the scene or in
+    				case of a message - the message starts. the concrete
+    				meaning depends on the presents or absence of the
+    				attributes that could be used to create startup
+    				dependencies. if given, tstart is added to the
+    				resulting starttime. if not, tstart is an absolute
+    				time.
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="tend" type="int" use="optional" default="0">
+    		<annotation>
+    			<documentation>
+    				time the element is deactivated within the scene or
+    				in case of a message - the message arrives the
+    				target knot. the concrete meaning depends on the
+    				presents or absence of the attributes that could be
+    				used to create finish dependencies. if given, tend
+    				is added to the resulting endtime. if not, tend is
+    				an absolute time.
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="pos" type="tns:tpos" default="0,0,0"></attribute>
+    	<attribute name="color" type="tns:tcolor_string_argb"
+    		default="ffff0000">
+    		<annotation>
+    			<documentation>
+    				surface color of the element
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="ltext" type="string" default='""'>
+    		<annotation>
+    			<documentation>label text</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lcolor" type="tns:tcolor_string_argb">
+    		<annotation>
+    			<documentation>color of the label text</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lfsize" type="int" default="12">
+    		<annotation>
+    			<documentation>font size of the label</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lpos" default="0">
+    		<annotation>
+    			<documentation>
+    				position of the label -1 - left 0 - center 1 - right
+    			</documentation>
+    		</annotation>
+    		<simpleType>
+    			<restriction base="int">
+    				<enumeration value="-1"></enumeration>
+    				<enumeration value="0"></enumeration>
+    				<enumeration value="1"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="lddc" type="tns:tnumeric_switch" default="1">
+    		<annotation>
+    			<documentation>
+    				do deep check while rendering label text
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lrot" type="tns:tnumeric_switch" default="0">
+    		<annotation>
+    			<documentation>1 - rotate label if scene is rotated (keep the label visible)
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="on_on_start_of" type="IDREF">
+			<annotation>
+				<documentation>activate element relative to start time of given referenced element,
+tstart is added to the relative time,
+on_on_start_of and on_on_end_of are mutual exclusive
+    			</documentation>
+			</annotation>
+    	</attribute>
+		<attribute name="on_on_end_of" type="IDREF">
+			<annotation>
+				<documentation>activate element relative to end time of given referenced element,
+tstart is added to the relative time
+on_on_start_of and on_on_end_of are mutual exclusive
+    			</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="off_on_start_of" type="IDREF">
+			<annotation>
+				<documentation>deactivate element relative to start time of given referenced element,
+tstart is added to the relative time
+off_on_start_of and off_on_end_of are mutual exclusive
+    			</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="off_on_end_of" type="IDREF">
+			<annotation>
+				<documentation>deactivate element relative to end time of given referenced element,
+tstart is added to the relative time
+off_on_start_of and off_on_end_of are mutual exclusive
+    			</documentation>
+			</annotation>
+		</attribute>
+    </complexType>
+
+
+    <simpleType name="tpos">
+        <annotation>
+        	<documentation>position in form X,Y,Z</documentation>
+        </annotation>
+        <restriction base="string">
+    		<pattern value="(-){0,1}\d+,(-){0,1}\d+,(-){0,1}\d+"></pattern>
+    	</restriction>
+    </simpleType>
+    <attributeGroup name="NewAttributeGroup"></attributeGroup>
+
+    <complexType name="tKnot">
+    	<complexContent>
+    		<extension base="tns:tNode">
+    			<attribute name="rxce" type="tns:tnumeric_switch" default="0">
+    				<annotation>
+    					<documentation>show rx counter in label</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="txce" type="tns:tnumeric_switch" default="0">
+    				<annotation>
+    					<documentation>show tx counter in label</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="cunit" type="string" default='""'>
+    				<annotation>
+    					<documentation>unit of rx and tx</documentation>
+    				</annotation></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="tMessage">
+    	<complexContent>
+    		<extension base="tns:tNode">
+    			<attribute name="from" type="IDREF" use="required">
+    				<annotation>
+    					<documentation>message start knot</documentation>
+    				</annotation></attribute>
+    			<attribute name="to" type="IDREF" use="required">
+    				<annotation>
+    					<documentation>message end knot</documentation>
+    				</annotation></attribute>
+    			<attribute name="size" type="int" default="1">
+    				<annotation>
+    					<documentation>size of the message (used for calculating rx/tx values of the knots)</documentation>
+    				</annotation></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <simpleType name="tOrientation">
+        <annotation>
+        	<documentation>0 - vertical orientation 
+1 - horizontal orientation</documentation>
+        </annotation>
+        <restriction base="tns:tnumeric_switch"></restriction>
+    </simpleType>
+
+    <complexType name="tTextLayer">
+    	<complexContent>
+    		<extension base="tns:tSceneElement">
+    			<attribute name="width" type="int" default="100"></attribute>
+    			<attribute name="height" type="int" default="100"></attribute>
+    			<attribute name="orientation" type="tns:tOrientation"
+    				default="0">
+    			</attribute>
+    			<attribute name="text" type="string" default='""'></attribute>
+    			<attribute name="tfsize" type="int" default="12">
+    				<annotation>
+    					<documentation>
+    						size of the font used to draw the text
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="tddc" type="tns:tnumeric_switch"
+    				default="1">
+    				<annotation>
+    					<documentation>
+    						do deep check when rendering text
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="tcolor" type="tns:tcolor_string_argb"
+    				default="ffff0000">
+    				<annotation>
+    					<documentation>color of the text</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="typewriter" type="tns:tnumeric_switch"
+    				default="0">
+    				<annotation>
+    					<documentation>type writer text layer - draw text character by character
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="typewriter_interval" type="int"
+    				default="100">
+    				<annotation>
+    					<documentation>draw a new character every x ms
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="typewriter_restart_endless" type="tns:tnumeric_switch" default="0">
+    				<annotation>
+    					<documentation>1 - restart typewriter after finishing
+0 - keep text static after finishing type writer mode</documentation>
+    				</annotation></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+
+    <complexType name="tNode">
+	<complexContent>
+    		<extension base="tns:tSceneElement">
+		<attribute name="type" type="string"></attribute>
+    	<attribute name="radius" type="string">
+    		<annotation>
+    			<documentation>
+    				size of the element only valid for type={0,1}
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="dim" type="string">
+    		<annotation>
+    			<documentation>
+    				size of the element as (x,y,z)-dimension only valid
+    				for type=2
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	</extension>
+		</complexContent>
+    </complexType>
+
+    <complexType name="tPath">
+		<complexContent>
+    		<extension base="tns:tSceneElement">
+			<attribute name="from" type="string">
+				<annotation>
+					<documentation>
+						ID of the element the path starts
+					</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="to" type="string">
+				<annotation>
+					<documentation>
+						ID of the element the path ends
+					</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="width" type="string">
+				<annotation>
+					<documentation>this thickness of the path</documentation>
+				</annotation></attribute>
+			</extension>
+		</complexContent>
+    </complexType>
+
+    <complexType name="tImageLayer">
+		<complexContent>
+			<extension base="tns:tSceneElement">
+			<annotation>
+				<documentation>shows an image</documentation>
+			</annotation>
+			<attribute name="width" type="int">
+				<annotation>
+					<documentation>width of the image, if given and not the same as the image has - scale the image to given value</documentation>
+				</annotation></attribute>
+			<attribute name="height" type="int">
+				<annotation>
+					<documentation>height of the image, if given and not the same as the image has - scale the image to given value</documentation>
+				</annotation></attribute>
+			<attribute name="orientation"  type="tns:tOrientation"
+    				default="0">
+    			</attribute>
+			<attribute name="alpha" type="int">
+				<annotation>
+					<documentation>transparency [0..255], 0 - completely transparent, 255 - solid like a rock
+	only possible for images of type gif or png</documentation>
+				</annotation></attribute>
+			<attribute name="t_fade_in" type="int">
+				<annotation>
+					<documentation>time to fade in the image (increase alpha from 0 to given|255) within x milliseconds</documentation>
+				</annotation></attribute>
+			<attribute name="t_fade_out" type="int">
+				<annotation>
+					<documentation>time to fade out the image (increase alpha from given|255 to 0) within x milliseconds</documentation>
+				</annotation></attribute>
+			<attribute name="src" type="string">
+				<annotation>
+					<documentation>path+name of the image. if stored in data directory only the name of the image is needed.</documentation>
+				</annotation></attribute>
+				
+			</extension>
+		</complexContent>
+    </complexType>
+</schema>
