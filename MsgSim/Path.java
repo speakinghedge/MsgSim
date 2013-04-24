@@ -19,6 +19,8 @@ class Path extends SceneElement {
 
   int m_stroke_width;  //!< diameter of the path  
   
+  int m_width;
+  
   public Path(PApplet parent, XML xml, IdResolver resolver) throws Exception {
     
     super(parent, xml, resolver);
