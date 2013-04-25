@@ -20,6 +20,10 @@ class Path extends SceneElement {
   int m_stroke_width;  //!< diameter of the path  
   
   int m_width;
+  Point m_path_middle;
+  
+  int m_type;   //!< type of the path, 0 - straight, 1 - arc
+  Point m_arc_path_center; //!< center point of the curve
   
   public Path(PApplet parent, XML xml, IdResolver resolver) throws Exception {
     
@@ -42,6 +46,8 @@ class Path extends SceneElement {
       
     m_stroke_width = xml.getInt("width", 1);
     
+    m_type = xml.getInt("type", 0);
+    m_arc_path_center = new Point(xml.getString("cpos", "0,0,0")); // center point of the curve
   }
   
   void initElement() throws Exception {
@@ -62,23 +68,61 @@ class Path extends SceneElement {
       throw new Exception("invalid label position given for path  " + getId() + ". only center position allowed");      
     }
     
-    m_top_middle_pos = new Point( m_start.getX() + ((m_end.getX() - m_start.getX())/2), 
+    m_path_middle = new Point( m_start.getX() + ((m_end.getX() - m_start.getX())/2), 
                                   m_start.getY() + ((m_end.getY() - m_start.getY())/2),
                                   m_start.getZ() + ((m_end.getZ() - m_start.getZ())/2));
-                                                                     
+    
+    m_top_middle_pos = getPathPos(0.5);
+    
+    p.bezierDetail(40);
+
   }
   
   public void drawSpecificPart(int time) {
     
-    p.strokeWeight(m_stroke_width);
-    p.stroke(m_color);
-    p.line(m_start.getX(), m_start.getY(), m_start.getZ(),
-                  m_end.getX(), m_end.getY(), m_end.getZ());
-    p.noStroke();         
+    switch(m_type) {
+      case 0: //straight
+        p.strokeWeight(m_stroke_width);
+        p.stroke(m_color);
+        p.line(m_start.getX(), m_start.getY(), m_start.getZ(),
+                      m_end.getX(), m_end.getY(), m_end.getZ());
+        p.noStroke();
+        break;
+      case 1: //bezir        
+        p.strokeWeight(m_stroke_width);
+        p.stroke(m_color);
+        p.noFill();
+        p.beginShape();        
+        p.vertex(m_start.getX(), m_start.getY(), m_start.getZ());        
+        p.bezierVertex(m_arc_path_center.getX(), m_arc_path_center.getY(), m_arc_path_center.getZ(),
+                       m_arc_path_center.getX(), m_arc_path_center.getY(), m_arc_path_center.getZ(),
+                       m_end.getX(), m_end.getY(), m_end.getZ()); //first point
+        p.endShape();  
+        p.noStroke();
+        break;
+    }      
   }
   
   int getElementWidth() { return m_width; }
-  Point getElementTopMiddlePosition() { return m_top_middle_pos; }
+  
+  Point getElementTopMiddlePosition() {
+    return m_top_middle_pos;
+  }
+  
+  Point getPathPos(double t) {
+    
+    switch (m_type) {
+      default:
+      case 0:
+            return new Point( (int)(m_start.getX() + ((m_end.getX() - m_start.getX())*t)), 
+                              (int)(m_start.getY() + ((m_end.getY() - m_start.getY())*t)),
+                              (int)(m_start.getZ() + ((m_end.getZ() - m_start.getZ())*t)));
+      case 1:  
+            return new Point( (int) p.bezierPoint((float)m_start.getX(), (float)m_arc_path_center.getX(), (float)m_arc_path_center.getX(), (float)m_end.getX(), (float)t),
+                              (int) p.bezierPoint((float)m_start.getY(), (float)m_arc_path_center.getY(), (float)m_arc_path_center.getY(), (float)m_end.getY(), (float)t),
+                              (int) p.bezierPoint((float)m_start.getZ(), (float)m_arc_path_center.getZ(), (float)m_arc_path_center.getZ(), (float)m_end.getZ(), (float)t));
+    } 
+  }
 
   boolean parentsVisible(int time) {
     return m_knot_from.isActive(time) && m_knot_to.isActive(time);

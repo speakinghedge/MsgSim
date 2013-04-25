@@ -163,10 +163,8 @@ abstract class SceneElement extends PAppletChild {
       throw new Exception("on_on_start_of and on_on_end_of given for element "+getId()+" but only one trigger possible");
     }
     
-    if (m_on_on_start_of_id.length() > 0) {
-            p.println(getId()+" wants to start on start of "+m_on_on_start_of_id);
-      m_start_time += m_resolver.getStartTimeOf(m_on_on_start_of_id);
-      p.println(getId()+" wants to start on start of "+m_on_on_start_of_id + " and that is :"+m_start_time);
+    if (m_on_on_start_of_id.length() > 0) {            
+      m_start_time += m_resolver.getStartTimeOf(m_on_on_start_of_id);      
       end_offset = m_start_time;
     }
     if (m_on_on_end_of_id.length() > 0) {

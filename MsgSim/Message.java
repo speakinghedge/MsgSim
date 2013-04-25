@@ -13,8 +13,9 @@ class Message extends Node {
   private int m_size;      //!< size of the message; default 1
     
   boolean m_was_active; //!< used for external state handling
-    
-  float m_x_per_ms, m_y_per_ms, m_z_per_ms; //!< movement per ms for x/y/z direction
+      
+  float m_step_per_ms; //!< 1/total_active_time - part of 0..1 to move for a given time
+  boolean m_invert_direction; //!< true if the movement is defined in the oposite direction as the path definition was done
     
   public Message(PApplet parent, XML xml, IdResolver resolver) throws Exception {
                 
@@ -49,10 +50,8 @@ class Message extends Node {
     }
    
     m_pos.setPos(m_start);
-    
-    m_x_per_ms = ((float)m_end.getX() - m_start.getX()) / m_time_visible;
-    m_y_per_ms = ((float)m_end.getY() - m_start.getY()) / m_time_visible;
-    m_z_per_ms = ((float)m_end.getZ() - m_start.getZ()) / m_time_visible;
+    m_invert_direction = !m_from_id.equals(m_parent_path.m_from_id);       
+    m_step_per_ms = (float)1.0 / m_time_visible;
     
     m_was_active = false;    
   }
@@ -65,11 +64,15 @@ class Message extends Node {
   /**
    * calculate the position based on current simulation time
    */
-  void draw_node(int time) { 
+  void draw_node(int time) {
     
-    m_pos.setPos((int)(m_start.getX() + (getActiveTime(time) * m_x_per_ms)), 
-                 (int)(m_start.getY() + (getActiveTime(time) * m_y_per_ms)),
-                 (int)(m_start.getZ() + (getActiveTime(time) * m_z_per_ms)));
+    if (m_invert_direction) {
+      m_pos.setPos(m_parent_path.getPathPos((m_time_visible - getActiveTime(time)) * m_step_per_ms));
+    } 
+    else
+   {
+     m_pos.setPos(m_parent_path.getPathPos(getActiveTime(time) * m_step_per_ms));
+   } 
     
   }  
     

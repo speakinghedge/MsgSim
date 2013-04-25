@@ -348,28 +348,49 @@ off_on_start_of and off_on_end_of are mutual exclusive
     </complexType>
 
     <complexType name="tPath">
-		<complexContent>
+    	<complexContent>
     		<extension base="tns:tSceneElement">
-			<attribute name="from" type="string">
-				<annotation>
-					<documentation>
-						ID of the element the path starts
-					</documentation>
-				</annotation>
-			</attribute>
-			<attribute name="to" type="string">
-				<annotation>
-					<documentation>
-						ID of the element the path ends
-					</documentation>
-				</annotation>
-			</attribute>
-			<attribute name="width" type="string">
-				<annotation>
-					<documentation>this thickness of the path</documentation>
-				</annotation></attribute>
-			</extension>
-		</complexContent>
+    			<attribute name="from" type="string">
+    				<annotation>
+    					<documentation>
+    						ID of the element the path starts
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="to" type="string">
+    				<annotation>
+    					<documentation>
+    						ID of the element the path ends
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="width" type="string">
+    				<annotation>
+    					<documentation>
+    						this thickness of the path
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="type">
+    				<annotation>
+    					<documentation>
+    						0 - straight path (default) 1 - bezier based
+    						path
+    					</documentation>
+    				</annotation>
+    				<simpleType>
+    					<restriction base="string">
+    						<pattern value="[01]"></pattern>
+    					</restriction>
+    				</simpleType>
+    			</attribute>
+    			<attribute name="cpos" type="tns:tpos">
+    				<annotation>
+    					<documentation>the center point of the bezier curve (used as control point 1 and 2),
+only used if type is = 1</documentation>
+    				</annotation></attribute>
+    		</extension>
+    	</complexContent>
     </complexType>
 
     <complexType name="tImageLayer">

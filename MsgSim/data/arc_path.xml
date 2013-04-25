@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+<setup name="arc path" width="800" height="600" bcolor="ff000000">
+<knot id="c1" pos="-300,0,-300" radius="70" type="1" color="ffEEAD0E" ltext="a" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c2" pos="-300,0,300" radius="70" type="1" color="ffEEAD0E" ltext="b" lfsize="30" lcolor="ffffffff"></knot>
+<knot id="c3" pos="300,0,300" radius="70" type="1" color="ffEEAD0E" ltext="c" lfsize="30" lcolor="ffffffff"></knot>
+
+<path id="p1" from="c1" to="c2" width="5" color="ffaabbcc" ltext="straight" type="0"></path>
+<path id="p2" from="c2" to="c3" width="5" color="ffaabbcc" ltext="arc" type="1" cpos="0,200,300"></path>
+<path id="p3" from="c3" to="c1" width="5" color="ffaabbcc" ltext="arc" type="1" cpos="0,-300,0"></path>
+
+
+</setup>
+<animation>
+<msg id="m1" from="c1" to="c2" tstart="0" tend="4000" type="0" radius="23" color="ffff4223" ltext="a->b" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m2" from="c2" to="c3" on_on_end_of="m1" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="b->c" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m3" from="c3" to="c1" on_on_end_of="m2" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c->a" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m4" from="c1" to="c3" on_on_end_of="m3" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="a->c" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m5" from="c3" to="c2" on_on_end_of="m4" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="c->b" lfsize="25" lcolor="ffffffff"></msg>
+<msg id="m6" from="c2" to="c1" on_on_end_of="m5" tstart="200" tend="4000" type="0" radius="23" color="ffff4223" ltext="b->a" lfsize="25" lcolor="ffffffff"></msg>
+
+</animation>
+</scene>

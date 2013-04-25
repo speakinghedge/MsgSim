@@ -11,6 +11,13 @@ this software is free. use it in any way on your own risk.
 change log
 ----------
 
+25.04.2013
+
+- fixed wrong direction of message if path direction has inverted definition
+- moved message position calculation to class Path
+- added bezier-based "curved" path (and a little demo -> arc_path.xml)
+- updated xsd (added new path type and attribute for the center of the path)
+
 initial version
 
 - scene elements: knot, path, text layer, image layer
