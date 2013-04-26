@@ -75,13 +75,24 @@ class ImageLayer extends SceneElement {
     if (m_orientation == 1) {
       p.rotateX(PApplet.HALF_PI);
     }
-    p.fill(255,255,255);
-    
+        
     if (m_fade_in_time != 0 &&  toa < m_fade_in_time) {
       t = (m_fade_in_per_ms*toa);      
     } else if (m_fade_out_time != 0 &&  time >= m_end_time - m_fade_in_time) {
       t = m_fade_out_per_ms*(m_time_visible - toa);      
-    }     
+    }
+    
+    p.noFill();
+    if (m_stroke_width > 0) 
+    {
+      p.stroke(m_stroke_color);
+      p.strokeWeight(m_stroke_width);
+      p.rect((float)0, (float)0, (float)m_width, (float)m_height);
+    } else {
+      p.noStroke();
+    }
+    
+    p.fill(255,255,255);    
     p.tint(t, t, t, t>m_alpha?m_alpha:t);
     
     p.image(m_image, 0, 0, m_width, m_height);

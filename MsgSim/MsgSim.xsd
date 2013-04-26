@@ -173,45 +173,62 @@ BB: hex blue 00..ff</documentation>
     	</attribute>
     	<attribute name="lrot" type="tns:tnumeric_switch" default="0">
     		<annotation>
-    			<documentation>1 - rotate label if scene is rotated (keep the label visible)
+    			<documentation>
+    				1 - rotate label if scene is rotated (keep the label
+    				visible)
     			</documentation>
     		</annotation>
     	</attribute>
     	<attribute name="on_on_start_of" type="IDREF">
-			<annotation>
-				<documentation>activate element relative to start time of given referenced element,
-tstart is added to the relative time,
-on_on_start_of and on_on_end_of are mutual exclusive
+    		<annotation>
+    			<documentation>
+    				activate element relative to start time of given
+    				referenced element, tstart is added to the relative
+    				time, on_on_start_of and on_on_end_of are mutual
+    				exclusive
     			</documentation>
-			</annotation>
+    		</annotation>
     	</attribute>
-		<attribute name="on_on_end_of" type="IDREF">
-			<annotation>
-				<documentation>activate element relative to end time of given referenced element,
-tstart is added to the relative time
-on_on_start_of and on_on_end_of are mutual exclusive
+    	<attribute name="on_on_end_of" type="IDREF">
+    		<annotation>
+    			<documentation>
+    				activate element relative to end time of given
+    				referenced element, tstart is added to the relative
+    				time on_on_start_of and on_on_end_of are mutual
+    				exclusive
     			</documentation>
-			</annotation>
-		</attribute>
-		<attribute name="off_on_start_of" type="IDREF">
-			<annotation>
-				<documentation>deactivate element relative to start time of given referenced element,
-tstart is added to the relative time
-off_on_start_of and off_on_end_of are mutual exclusive
+    		</annotation>
+    	</attribute>
+    	<attribute name="off_on_start_of" type="IDREF">
+    		<annotation>
+    			<documentation>
+    				deactivate element relative to start time of given
+    				referenced element, tstart is added to the relative
+    				time off_on_start_of and off_on_end_of are mutual
+    				exclusive
     			</documentation>
-			</annotation>
-		</attribute>
-		<attribute name="off_on_end_of" type="IDREF">
-			<annotation>
-				<documentation>deactivate element relative to end time of given referenced element,
-tstart is added to the relative time
-off_on_start_of and off_on_end_of are mutual exclusive
+    		</annotation>
+    	</attribute>
+    	<attribute name="off_on_end_of" type="IDREF">
+    		<annotation>
+    			<documentation>
+    				deactivate element relative to end time of given
+    				referenced element, tstart is added to the relative
+    				time off_on_start_of and off_on_end_of are mutual
+    				exclusive
     			</documentation>
-			</annotation>
-		</attribute>
+    		</annotation>
+    	</attribute>
+    	<attribute name="stroke" type="tns:tcolor_string_argb"
+    		default="ffff0000">
+    		<annotation>
+    			<documentation>color of the stroke, default 0xffff0000</documentation>
+    		</annotation></attribute>
+    	<attribute name="strokew" type="string">
+    		<annotation>
+    			<documentation>width of the stroke, default 0 = stroke disabled</documentation>
+    		</annotation></attribute>
     </complexType>
-
-
     <simpleType name="tpos">
         <annotation>
         	<documentation>position in form X,Y,Z</documentation>

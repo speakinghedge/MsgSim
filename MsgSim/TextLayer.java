@@ -62,8 +62,7 @@ class TextLayer extends SceneElement {
    */
   public void drawSpecificPart(int time) {
       
-    p.fill(m_color);
-    p.noStroke();
+    p.fill(m_color);        
     p.textAlign(PApplet.LEFT);
 
     p.hint(m_do_deep_check == true ? PApplet.ENABLE_DEPTH_TEST : PApplet.DISABLE_DEPTH_TEST);      
@@ -108,7 +107,7 @@ class TextLayer extends SceneElement {
         p.text(get_typewriter_text(time), 10 , 10 , m_width - 20, m_height - 20);
         p.popMatrix();
       }              
-    }      
+    }        
   }  
   
   private String get_typewriter_text(int time) {

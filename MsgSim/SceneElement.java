@@ -24,6 +24,9 @@ abstract class SceneElement extends PAppletChild {
   */ 
   
   int m_color;              //!< color of the element, default 0xffff0000 (red)
+  int m_stroke_color;       //!< color of the stroke, default 0xffff
+  int m_stroke_width;       //!< width of the stroke, default 0 (=stroke disabled)
+  int m_stroke_ddt;         //!< stroke do deep test, default 1
   
   /* labels are printet on top of the element */
   String m_label_text;           //!< label text, default empty string
@@ -110,6 +113,9 @@ abstract class SceneElement extends PAppletChild {
     m_label_do_deep_check = xml.getInt("lddc", 1)==1?true:false;
     
     m_label_rotate_y  = xml.getInt("lrot", 0)==1?true:false;
+    
+    m_stroke_color = PApplet.unhex(xml.getString("stroke", "ffff0000"));
+    m_stroke_width = xml.getInt("strokew", 0);    
     
   }
   
@@ -230,6 +236,14 @@ abstract class SceneElement extends PAppletChild {
     }
     
     p.hint(m_do_deep_check == true ? PApplet.ENABLE_DEPTH_TEST : PApplet.DISABLE_DEPTH_TEST);
+    
+    if (m_stroke_width > 0) {
+      p.stroke(m_stroke_color);
+      p.strokeWeight(m_stroke_width);
+    } else {
+      p.noStroke();
+    }
+    
     drawSpecificPart(time);
     
     if (m_label_text.length() != 0) {

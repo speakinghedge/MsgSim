@@ -58,8 +58,7 @@ abstract class Node extends SceneElement {
    * draw the Node
    */
   public void drawSpecificPart(int time) {
-    
-    p.noStroke();
+        
     p.fill(m_color);
     
     p.pushMatrix();
@@ -80,7 +79,7 @@ abstract class Node extends SceneElement {
         break;
       
     }
-    p.popMatrix(); 
+    p.popMatrix();
   }
   
   int getElementWidth() {
